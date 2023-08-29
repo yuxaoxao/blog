@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="阿里云Centos到期后重新挂载云盘 1.挂载磁盘分区，注意这里只是临时挂载 下次重启后失效 123&#x2F;&#x2F;命令释义：mount 磁盘分区 挂载目录mount &#x2F;dev&#x2F;vdb1 &#x2F;mnt&#x2F;sdc 2.查询磁盘分区的UUID 1234[root@ecs-test-0001 ~]# blkid &#x2F;dev&#x2F;vdb1&#x2F;dev&#x2F;vdb1: UUID&#x3D;&quot;1576ce59-66a7-40f7-b15e-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="阿里云Centos到期后重新挂载云盘">
+<meta property="og:url" content="http://example.com/2023/06/12/Linux/%E9%98%BF%E9%87%8C%E4%BA%91Centos%E5%88%B0%E6%9C%9F%E5%90%8E%E9%87%8D%E6%96%B0%E6%8C%82%E8%BD%BD%E4%BA%91%E7%9B%98/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="阿里云Centos到期后重新挂载云盘 1.挂载磁盘分区，注意这里只是临时挂载 下次重启后失效 123&#x2F;&#x2F;命令释义：mount 磁盘分区 挂载目录mount &#x2F;dev&#x2F;vdb1 &#x2F;mnt&#x2F;sdc 2.查询磁盘分区的UUID 1234[root@ecs-test-0001 ~]# blkid &#x2F;dev&#x2F;vdb1&#x2F;dev&#x2F;vdb1: UUID&#x3D;&quot;1576ce59-66a7-40f7-b15e-">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-06-11T16:50:00.000Z">
+<meta property="article:modified_time" content="2023-06-11T17:13:16.893Z">
+<meta property="article:author" content="姑苏城外">
+<meta name="twitter:card" content="summary">
+
+
+<title >阿里云Centos到期后重新挂载云盘</title>
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.ico?v=2.0.0' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.ico?v=2.0.0' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"姑苏城外","root":"/","typed_text":["Web Developer"],"theme_version":"2.0.0","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/jsyx.jpg","icon16":"/img/favicon.ico","icon32":"/img/favicon.ico","appleTouchIcon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","showText":"(/≧▽≦/)咦！又好了！","hideText":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2023-06-12 01:13:16"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.0.0" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+ 
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" data-scroll-container style="opacity: 0">
+          <div data-scroll-section id="content" class="trm-scroll-section">
+
+            <div class="locomotive-scroll__sticky-target" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none;"></div>
+
+            <!-- top bar -->
+            <header class="trm-top-bar" data-scroll data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target" >
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/jsyx.jpg">
+    
+    
+        <div class="trm-logo-text">
+            技术<span>有限</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/" target="">
+                    首页
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/archives/" target="">
+                    归档
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner" data-scroll data-scroll-direction="vertical">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" data-scroll data-scroll-direction="vertical" data-scroll-speed="-3" src="/img/banner.png">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container" data-scroll data-scroll-direction="vertical" data-scroll-speed="0">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            阿里云Centos到期后重新挂载云盘
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2023
+                                    </span
+                                ></li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <a href="#about-triger" data-scroll-to="#about-triger" data-scroll-offset="-130" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </a>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div id="page-sidebar" class="col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    
+
+<div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card" data-scroll data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target"> 
+    
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/img/lyy.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        姑苏城外
+    </h5>
+    
+        <div class="trm-label">
+            I`m
+            <span class="trm-typed-text">
+                <!-- Words for theme.user.typedText -->
+            </span>
+        </div>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                地址:
+            </div>
+            <div class="trm-label trm-label-light">
+                China
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                年龄:
+            </div>
+            <div class="trm-label trm-label-light">
+                1024
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                性别:
+            </div>
+            <div class="trm-label trm-label-light">
+                男
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div id="page-content" class="col-lg-8">
+                <div class="trm-content" id="trm-content">
+                    <div data-scroll data-scroll-repeat data-scroll-offset="500" id="about-triger"></div>
+
+                    <div id="post-info" class="row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            06/12
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            00:50
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            姑苏城外
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1>阿里云Centos到期后重新挂载云盘</h1>
+<h3 id="1-挂载磁盘分区，注意这里只是临时挂载-下次重启后失效">1.挂载磁盘分区，注意这里只是临时挂载 下次重启后失效</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//命令释义：mount 磁盘分区 挂载目录</span><br><span class="line">mount /dev/vdb1 /mnt/sdc</span><br></pre></td></tr></table></figure>
+<h3 id="2-查询磁盘分区的UUID">2.查询磁盘分区的UUID</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[root@ecs-test-0001 ~]# blkid /dev/vdb1</span><br><span class="line">/dev/vdb1: UUID=&quot;1576ce59-66a7-40f7-b15e-db094a8696ed&quot; TYPE=&quot;ext4&quot; PARTUUID=&quot;49026b06-01&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="3-设置fstab，在最后添加上以下信息">3.设置fstab，在最后添加上以下信息</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">vi /etc/fstab</span><br><span class="line">UUID=1576ce59-66a7-40f7-b15e-db094a8696ed /mnt/sdc                ext4    defaults        0 2</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>以内容上仅为示例，具体请以实际情况为准，参数说明如下：</p>
+<p>第一列为UUID，此处填写步骤二查询到的磁盘分区的UUID。</p>
+<p>第二列为磁盘分区的挂载目录，可以通过df -TH命令查询。</p>
+<p>第三列为磁盘分区的文件系统格式， 可以通过df -TH命令查询。</p>
+<p>第四列为磁盘分区的挂载选项，此处通常设置为defaults即可。</p>
+<p>第五列为Linux dump备份选项。</p>
+<p>0表示不使用Linux dump备份。现在通常不使用dump备份，此处设置为0即可。</p>
+<p>1表示使用Linux dump备份。</p>
+<p>第六列为fsck选项，即开机时是否使用fsck检查磁盘。</p>
+<p>0表示不检验。</p>
+<p>挂载点为（/）根目录的分区，此处必须填写1。</p>
+<p>根分区设置为1，其他分区只能从2开始，系统会按照数字从小到大依次检查下去。</p>
+<p>搬运自<a target="_blank" rel="noopener" href="https://it.cha138.com/javascript/show-6751884.html">linux自动挂载（重启后mount失效）</a></p>
+
+</article>
+    
+    
+</div>
+<div id="post-next-prev" class="row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
+        <a href="/2023/06/12/%E5%89%8D%E7%AB%AF/Element%20Admin%20route-view%E6%A0%87%E7%AD%BE%E5%B5%8C%E5%A5%97%E5%88%B7%E6%96%B0%E9%97%AE%E9%A2%98/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/%E5%89%8D%E7%AB%AF/">
+                    前端
+                </a>
+            </div>
+            <h5>
+                <a href="/2023/06/12/%E5%89%8D%E7%AB%AF/Element%20Admin%20route-view%E6%A0%87%E7%AD%BE%E5%B5%8C%E5%A5%97%E5%88%B7%E6%96%B0%E9%97%AE%E9%A2%98/" class="trm-anima-link">
+                    Element Admin route-view标签嵌套刷新问题
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>23/06/12</li>
+                <li>01:16</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
+        <a href="/2023/06/12/PHP/json_encode%E5%90%8C%E6%97%B6%E8%AE%BE%E7%BD%AE%E4%B8%AD%E6%96%87%E5%92%8C%E6%96%9C%E7%BA%BF%E4%B8%8D%E8%BD%AC%E4%B9%89/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/PHP/">
+                    PHP
+                </a>
+            </div>
+            <h5>
+                <a href="/2023/06/12/PHP/json_encode%E5%90%8C%E6%97%B6%E8%AE%BE%E7%BD%AE%E4%B8%AD%E6%96%87%E5%92%8C%E6%96%9C%E7%BA%BF%E4%B8%8D%E8%BD%AC%E4%B9%89/" class="trm-anima-link">
+                    json_encode同时设置中文和斜线不转义
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>23/06/12</li>
+                <li>00:00</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-scroll-animation" data-scroll data-scroll-offset="50">
+
+    
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>
+                由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v6.3.0
+            </span>
+            <span class="footer-separator" data-separator=" | "></span>
+            <span> 
+                主题 - 
+                <a rel="noopener" href='https://github.com/MaLuns/hexo-theme-async' target='_blank'>Async</a>
+                v2.0.0
+            </span>
+        </div>
+      
+
+     
+
+     
+</footer>
+ 
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            <div class="trm-fixed-container" data-scroll data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target" data-scroll-offset="-10">
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+</div>
+          </div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+
+  </div>
+  <!-- app wrapper end -->
+
+  <div id="trm-back-top" class="trm-back-top" data-title="回到顶部">
+    <i class="iconfont fas fa-arrow-up"></i>
+</div>
+  
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://unpkg.com/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+
+    
+<script src="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=2.0.0"></script>
+    
+
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=2.0.0"></script>
+
+</body>
+
+</html>
