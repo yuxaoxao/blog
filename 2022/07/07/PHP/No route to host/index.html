@@ -10,16 +10,16 @@
 <meta name="description" content="出现No route to host 的时候，有如下几种可能： 1、对方的域名确实不通 2、本机自己开了防火墙 3、本机的etc&#x2F;hosts 里面没有配置本机的机器名和ip  （可能性最大） 其中第三点是最猫腻的，在不配置的时候是间断性的（可能1个月都正常，然后突然几天不正常）。修改方案如下：  在结尾加上：机器名和机器ip（用空格隔开） 扩展资料： telnet虚拟机No route to ho">
 <meta property="og:type" content="article">
 <meta property="og:title" content="No route to host">
-<meta property="og:url" content="https://yuxaoxao.github.io/blog/2022/07/07/PHP/No%20route%20to%20host/index.html">
+<meta property="og:url" content="https://gitee.com/yuxiaoxiao.net/blog/2022/07/07/PHP/No%20route%20to%20host/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="出现No route to host 的时候，有如下几种可能： 1、对方的域名确实不通 2、本机自己开了防火墙 3、本机的etc&#x2F;hosts 里面没有配置本机的机器名和ip  （可能性最大） 其中第三点是最猫腻的，在不配置的时候是间断性的（可能1个月都正常，然后突然几天不正常）。修改方案如下：  在结尾加上：机器名和机器ip（用空格隔开） 扩展资料： telnet虚拟机No route to ho">
 <meta property="og:locale">
-<meta property="og:image" content="https://yuxaoxao.github.io/img/404.jpg">
+<meta property="og:image" content="https://gitee.com/img/404.jpg">
 <meta property="article:published_time" content="2022-07-07T03:00:36.000Z">
 <meta property="article:modified_time" content="2023-02-07T02:21:00.425Z">
 <meta property="article:author" content="姑苏城外">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://yuxaoxao.github.io/img/404.jpg">
+<meta name="twitter:image" content="https://gitee.com/img/404.jpg">
 
 
 <title >No route to host</title>
@@ -63,7 +63,7 @@
 
 
 <!-- Variable -->
-<script>window.ASYNC_CONFIG = {"hostname":"yuxaoxao.github.io","author":"姑苏城外","root":"/blog/","typed_text":["Web Developer"],"theme_version":"2.0.0","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/jsyx.jpg","icon16":"/img/favicon.ico","icon32":"/img/favicon.ico","appleTouchIcon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","showText":"(/≧▽≦/)咦！又好了！","hideText":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false}};</script>
+<script>window.ASYNC_CONFIG = {"hostname":"gitee.com","author":"姑苏城外","root":"/blog/","typed_text":["Web Developer"],"theme_version":"2.0.0","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/jsyx.jpg","icon16":"/img/favicon.ico","icon32":"/img/favicon.ico","appleTouchIcon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","showText":"(/≧▽≦/)咦！又好了！","hideText":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false}};</script>
 <script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2023-02-07 10:21:00"};</script>
 
 <!-- Theme mode css -->
