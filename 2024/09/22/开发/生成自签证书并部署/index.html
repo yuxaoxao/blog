@@ -7,16 +7,25 @@
 <meta name="full-screen" content="yes">
 <meta name="theme-color" content="#317EFB" />
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
-<meta property="og:type" content="website">
-<meta property="og:title" content="技术有限的博客">
-<meta property="og:url" content="https://gitee.com/yuxiaoxiao.net/blog/page/2/index.html">
+<meta name="description" content="生成自签SSL证书并部署 最近有个项目需要部署到内网访问，同事反馈通过串口连接的体重秤需要同https域名下访问才行，后来我想到了通过自签SSL证书进行部署，下面是生成及nginx配置教程。 首先，我们要知道，现在常见的谷歌内核浏览器，不是通过SSL证书厂商申请的，基本都会提示不安全，影响安全，原因是客户端本地没有对应的根证书，所以我们要除了要生成网站的SSL证书之外，还要生成一个根证书，并且网站">
+<meta property="og:type" content="article">
+<meta property="og:title" content="生成自签SSL证书并部署">
+<meta property="og:url" content="https://gitee.com/yuxiaoxiao.net/blog/2024/09/22/%E5%BC%80%E5%8F%91/%E7%94%9F%E6%88%90%E8%87%AA%E7%AD%BE%E8%AF%81%E4%B9%A6%E5%B9%B6%E9%83%A8%E7%BD%B2/index.html">
 <meta property="og:site_name" content="技术有限的博客">
+<meta property="og:description" content="生成自签SSL证书并部署 最近有个项目需要部署到内网访问，同事反馈通过串口连接的体重秤需要同https域名下访问才行，后来我想到了通过自签SSL证书进行部署，下面是生成及nginx配置教程。 首先，我们要知道，现在常见的谷歌内核浏览器，不是通过SSL证书厂商申请的，基本都会提示不安全，影响安全，原因是客户端本地没有对应的根证书，所以我们要除了要生成网站的SSL证书之外，还要生成一个根证书，并且网站">
 <meta property="og:locale">
+<meta property="og:image" content="https://gitee.com/blog/img/404.jpg">
+<meta property="og:image" content="https://gitee.com/blog/img/404.jpg">
+<meta property="og:image" content="https://gitee.com/blog/img/404.jpg">
+<meta property="og:image" content="https://gitee.com/blog/img/404.jpg">
+<meta property="article:published_time" content="2024-09-22T15:58:20.000Z">
+<meta property="article:modified_time" content="2024-09-22T17:09:43.498Z">
 <meta property="article:author" content="姑苏城外">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/blog/img/404.jpg">
 
 
-<title >技术有限的博客</title>
+<title >生成自签SSL证书并部署</title>
 
 <!-- Favicon -->
 
@@ -58,7 +67,7 @@
 
 <!-- Variable -->
 <script>window.ASYNC_CONFIG = {"hostname":"gitee.com","author":"姑苏城外","root":"/blog/","typed_text":["Web Developer"],"theme_version":"2.0.0","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/jsyx.jpg","icon16":"/img/favicon.ico","icon32":"/img/favicon.ico","appleTouchIcon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","showText":"(/≧▽≦/)咦！又好了！","hideText":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false}};</script>
-<script id="async-page-config">window.PAGE_CONFIG = {"isPost":false,"isHome":true,"postUpdate":"2024-09-23 01:10:37"};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2024-09-23 01:09:43"};</script>
 
 <!-- Theme mode css -->
 <link data-swup-theme rel="stylesheet" href="/blog/css/index.css?v=2.0.0" id="trm-switch-style">
@@ -185,7 +194,8 @@
             <!-- top bar end -->
 
             <!-- body -->
-            <div class="trm-content-start">
+            
+<div class="trm-content-start">
     <!-- banner -->
     <div class="trm-banner" data-scroll data-scroll-direction="vertical">
     
@@ -206,10 +216,10 @@
                     <!-- banner title -->
                     <div class="trm-banner-text ">
                         <div class="trm-label trm-mb-20">
-                            Hi my new friend!
+                            NEWS LETTER
                         </div>
                         <h1 class="trm-mb-30 trm-hsmb-font">
-                            树深时见鹿，<br>溪午不闻钟。
+                            生成自签SSL证书并部署
                         </h1>
 
                         
@@ -219,7 +229,7 @@
                                 </li>
                                 <li>
                                     <span>
-                                        page
+                                        2024
                                     </span
                                 ></li>
                             </ul>
@@ -317,159 +327,75 @@
                 <div class="trm-content" id="trm-content">
                     <div data-scroll data-scroll-repeat data-scroll-offset="500" id="about-triger"></div>
 
-                    <!-- categories -->
+                    <div id="post-info" class="row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            09/22
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            23:58
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            姑苏城外
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1>生成自签SSL证书并部署</h1>
+<p>最近有个项目需要部署到内网访问，同事反馈通过串口连接的体重秤需要同https域名下访问才行，后来我想到了通过自签SSL证书进行部署，下面是生成及nginx配置教程。</p>
+<p>首先，我们要知道，现在常见的谷歌内核浏览器，不是通过SSL证书厂商申请的，基本都会提示不安全，影响安全，原因是客户端本地没有对应的根证书，所以我们要除了要生成网站的SSL证书之外，还要生成一个根证书，并且网站的SSL证书，是通过根证书生成的。总结一句话，我们要生成一个根证书，还要生成一个（或多个，看需求场景）基于这个根证书的SSL证书。</p>
+<h6 id="生成证书依赖openssl，由于本人的是windows电脑，所以直接使用GIT-BASH进行生成。">生成证书依赖openssl，由于本人的是windows电脑，所以直接使用GIT BASH进行生成。</h6>
+<p>1.首先我们要生成两个配置文件，一个是根证书的配置文件，一个是网站证书的配置文件。</p>
+<p>根证书RootCA.cnf(RootCA这个名字可以自定义)：</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[ req ]</span><br><span class="line">distinguished_name = req_distinguished_name</span><br><span class="line">x509_extensions = root_ca</span><br><span class="line"> </span><br><span class="line">[ req_distinguished_name ]</span><br><span class="line"> </span><br><span class="line"># 以下内容可随意填写</span><br><span class="line">countryName = CN (2 letter code)</span><br><span class="line">countryName_min = 2</span><br><span class="line">countryName_max = 2</span><br><span class="line">stateOrProvinceName = Beijing</span><br><span class="line">localityName = Beijing</span><br><span class="line">0.organizationName = jingcheng</span><br><span class="line">organizationalUnitName = jingcheng</span><br><span class="line">commonName = jiujielab</span><br><span class="line">commonName_max = 64</span><br><span class="line">emailAddress = yuxaoxao@gmail.com</span><br><span class="line">emailAddress_max = 64</span><br><span class="line"> </span><br><span class="line">[ root_ca ]</span><br><span class="line">basicConstraints = critical, CA:true</span><br></pre></td></tr></table></figure>
+<p>网站证书server.ext:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">subjectAltName = @alt_names</span><br><span class="line">extendedKeyUsage = serverAuth</span><br><span class="line"> </span><br><span class="line">[alt_names]</span><br><span class="line"> </span><br><span class="line"># 域名，如有多个用DNS.2,DNS.3…来增加</span><br><span class="line">#DNS.1 = domain.com</span><br><span class="line"># IP地址</span><br><span class="line">IP.1 = 192.168.0.202</span><br><span class="line">IP.2 = 192.168.0.200</span><br></pre></td></tr></table></figure>
+<p>2.生成CA根证书</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -x509 -newkey rsa:2048 -out RootCA.cer -outform PEM -keyout RootCA.pvk -days 36500 -verbose -config RootCA.cnf -nodes -sha256 -subj &quot;//CN=Root CA&quot;</span><br></pre></td></tr></table></figure>
+<p>3.生成网站证书key及req文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -newkey rsa:2048 -keyout server.pvk -out server.req -subj //CN=localhost -sha256 -nodes</span><br></pre></td></tr></table></figure>
+<p>4.使用根证书及网站证书key生成网站证书</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -req -CA RootCA.cer -CAkey RootCA.pvk -in server.req -out server.cer -days 36500 -extfile server.ext -sha256 -set_serial 0x1111</span><br></pre></td></tr></table></figure>
+<p>5.部署</p>
+<p>通过上面几个步骤，我们现在已经获得RootCA.cer、server.cer、server.pvk，其中RootCA.cer为导入客户端的根证书，server.cer、server.pvk为部署到网站的证书及key。</p>
+<p>nginx配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">		listen 443 ssl;</span><br><span class="line">		server_name  _;</span><br><span class="line">	ssl_certificate /server.cer;</span><br><span class="line">	ssl_certificate_key /server.pvk;</span><br><span class="line">	ssl_session_timeout 5m;</span><br><span class="line">	ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;</span><br><span class="line">	ssl_protocols TLSv1 TLSv1.1 TLSv1.2;</span><br><span class="line">	ssl_prefer_server_ciphers on;</span><br><span class="line">       root   &quot;/project/path&quot;;</span><br><span class="line">&#125;       </span><br><span class="line">       </span><br></pre></td></tr></table></figure>
+<p>本地客户端配置：<br>
+<img src="/blog/img/2024/09/001.jpg" alt="图片" title="步骤1" loading="lazy" onerror='this.onerror=null;this.src="/blog/img/404.jpg"'><br>
+<img src="/blog/img/2024/09/002.png" alt="图片" title="步骤2" loading="lazy" onerror='this.onerror=null;this.src="/blog/img/404.jpg"'><br>
+<img src="/blog/img/2024/09/003.jpg" alt="图片" title="步骤3" loading="lazy" onerror='this.onerror=null;this.src="/blog/img/404.jpg"'><br>
+<img src="/blog/img/2024/09/004.png" alt="图片" title="步骤4" loading="lazy" onerror='this.onerror=null;this.src="/blog/img/404.jpg"'></p>
+<h6 id="参考教程">参考教程</h6>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ddcoder/p/11589723.html">自签https证书2（适配新版chrome，不会显示“不安全”） </a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/383976086">OpenSSL 生成Nginx自有证书</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_46302361/article/details/137452277#:~:text=%E4%B8%80%E3%80%81%E6%89%93%E5%BC%80edge%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AE%BE%E7%BD%AE%20%E5%9C%A8%E8%AE%BE%E7%BD%AE%E4%B8%AD%E6%90%9C%E7%B4%A2%20%E8%AF%81%E4%B9%A6%EF%BC%8C%E6%89%BE%E5%88%B0%25">edge浏览器导入 .cer证书 教程</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/cyds/p/15640759.html">用OpenSSL自颁发证书</a></p>
 
-    <div class="row hidden-sm">
-        
-        
-        <div class="col-lg-6">
-            <!-- categories card -->
-<div class="trm-blog-categories trm-scroll-animation" data-scroll data-scroll-offset="40">
-    <h6>
-        PHP
-        <span class="trm-number">
-            6
-        </span>
-    </h6>
-    <div class="trm-divider trm-mb-20 trm-mt-20"></div>
-    <a href="/blog/categories/PHP/." class="trm-label">
-        查看分类 
-        <i class="iconfont fas fa-arrow-right arrow-right"></i>
-    </a>
-</div>
-<!-- categories card end -->
-        </div>
-        
-        <div class="col-lg-6">
-            <!-- categories card -->
-<div class="trm-blog-categories trm-scroll-animation" data-scroll data-scroll-offset="40">
-    <h6>
-        前端
-        <span class="trm-number">
-            5
-        </span>
-    </h6>
-    <div class="trm-divider trm-mb-20 trm-mt-20"></div>
-    <a href="/blog/categories/%E5%89%8D%E7%AB%AF/." class="trm-label">
-        查看分类 
-        <i class="iconfont fas fa-arrow-right arrow-right"></i>
-    </a>
-</div>
-<!-- categories card end -->
-        </div>
-        
-    </div>
-
-<!-- categories end -->
-
-<!-- newest publications -->
-<div class="row">
+</article>
     
-        <div class="col-lg-12">
-            <!-- title -->
-            <h5 class="trm-title-with-divider">
-                最近发布 
-                <span data-number="01"></span>
-            </h5>
-        </div>
+    
+</div>
+<div id="post-next-prev" class="row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
     
     
         <div class="col-lg-6">
     <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
-        <a href="/blog/2022/06/01/%E5%89%8D%E7%AB%AF/iOS%20%E7%B3%BB%E7%BB%9F13.4%E4%BB%A5%E4%B8%8A%20html2canvas%20%E5%A4%B1%E6%95%88%E7%9A%84%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="trm-cover-frame trm-anima-link">
-            
-            
-                <img alt="cover" class="no-fancybox" src="/blog/img/block.jpg">
-            
-        </a>
-        
-        <div class="trm-card-descr">
-            <div class="trm-label trm-category trm-mb-20">
-                <a href=" /blog/categories/%E5%89%8D%E7%AB%AF/">
-                    前端
-                </a>
-            </div>
-            <h5>
-                <a href="/blog/2022/06/01/%E5%89%8D%E7%AB%AF/iOS%20%E7%B3%BB%E7%BB%9F13.4%E4%BB%A5%E4%B8%8A%20html2canvas%20%E5%A4%B1%E6%95%88%E7%9A%84%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="trm-anima-link">
-                    iOS 系统13.4以上 html2canvas 失效的问题解决方法
-                </a>
-            </h5>
-            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
-            <ul class="trm-card-data trm-label">
-                <li>22/06/01</li>
-                <li>01:53</li>
-                
-                
-            </ul>
-        </div>
-    </div>
-</div>
-    
-        <div class="col-lg-6">
-    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
-        <a href="/blog/2022/06/01/%E5%89%8D%E7%AB%AF/iOS%20%E8%8B%B9%E6%9E%9C%E6%89%8B%E6%9C%BA%E8%B0%83%E7%94%A8postMessage%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/" class="trm-cover-frame trm-anima-link">
-            
-            
-                <img alt="cover" class="no-fancybox" src="/blog/img/block.jpg">
-            
-        </a>
-        
-        <div class="trm-card-descr">
-            <div class="trm-label trm-category trm-mb-20">
-                <a href=" /blog/categories/%E5%89%8D%E7%AB%AF/">
-                    前端
-                </a>
-            </div>
-            <h5>
-                <a href="/blog/2022/06/01/%E5%89%8D%E7%AB%AF/iOS%20%E8%8B%B9%E6%9E%9C%E6%89%8B%E6%9C%BA%E8%B0%83%E7%94%A8postMessage%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/" class="trm-anima-link">
-                    iOS 苹果手机调用postMessage注意事项
-                </a>
-            </h5>
-            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
-            <ul class="trm-card-data trm-label">
-                <li>22/06/01</li>
-                <li>01:42</li>
-                
-                
-            </ul>
-        </div>
-    </div>
-</div>
-    
-        <div class="col-lg-6">
-    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
-        <a href="/blog/2022/06/01/%E5%89%8D%E7%AB%AF/iOS%20js%20%E8%B0%83%E7%94%A8new%20Date%20%E8%BF%94%E5%9B%9ENaN/" class="trm-cover-frame trm-anima-link">
-            
-            
-                <img alt="cover" class="no-fancybox" src="/blog/img/block.jpg">
-            
-        </a>
-        
-        <div class="trm-card-descr">
-            <div class="trm-label trm-category trm-mb-20">
-                <a href=" /blog/categories/%E5%89%8D%E7%AB%AF/">
-                    前端
-                </a>
-            </div>
-            <h5>
-                <a href="/blog/2022/06/01/%E5%89%8D%E7%AB%AF/iOS%20js%20%E8%B0%83%E7%94%A8new%20Date%20%E8%BF%94%E5%9B%9ENaN/" class="trm-anima-link">
-                    iOS设备js 调用new Date返回NaN问题
-                </a>
-            </h5>
-            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
-            <ul class="trm-card-data trm-label">
-                <li>22/06/01</li>
-                <li>01:29</li>
-                
-                
-            </ul>
-        </div>
-    </div>
-</div>
-    
-        <div class="col-lg-6">
-    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
-        <a href="/blog/2022/04/24/PHP/windows%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1schtasks/" class="trm-cover-frame trm-anima-link">
+        <a href="/blog/2024/08/22/PHP/%E9%98%BF%E9%87%8C%E4%BA%91%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E9%99%90%E5%88%B6%E4%B8%8A%E4%BC%A0%E7%9B%AE%E5%BD%95%E6%89%A7%E8%A1%8Cphp%E6%96%87%E4%BB%B6/" class="trm-cover-frame trm-anima-link">
             
             
                 <img alt="cover" class="no-fancybox" src="/blog/img/block.jpg">
@@ -483,45 +409,14 @@
                 </a>
             </div>
             <h5>
-                <a href="/blog/2022/04/24/PHP/windows%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1schtasks/" class="trm-anima-link">
-                    windows设置定时任务
+                <a href="/blog/2024/08/22/PHP/%E9%98%BF%E9%87%8C%E4%BA%91%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E9%99%90%E5%88%B6%E4%B8%8A%E4%BC%A0%E7%9B%AE%E5%BD%95%E6%89%A7%E8%A1%8Cphp%E6%96%87%E4%BB%B6/" class="trm-anima-link">
+                    阿里云虚拟主机限制上传目录执行php文件
                 </a>
             </h5>
             <div class="trm-divider trm-mb-20 trm-mt-20"></div>
             <ul class="trm-card-data trm-label">
-                <li>22/04/24</li>
-                <li>13:44</li>
-                
-                
-            </ul>
-        </div>
-    </div>
-</div>
-    
-        <div class="col-lg-6">
-    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
-        <a href="/blog/2022/04/05/%E5%89%8D%E7%AB%AF/%E6%89%8B%E6%9C%BA%E5%8F%B7%E6%AD%A3%E5%88%99/" class="trm-cover-frame trm-anima-link">
-            
-            
-                <img alt="cover" class="no-fancybox" src="/blog/img/block.jpg">
-            
-        </a>
-        
-        <div class="trm-card-descr">
-            <div class="trm-label trm-category trm-mb-20">
-                <a href=" /blog/categories/%E5%89%8D%E7%AB%AF/">
-                    前端
-                </a>
-            </div>
-            <h5>
-                <a href="/blog/2022/04/05/%E5%89%8D%E7%AB%AF/%E6%89%8B%E6%9C%BA%E5%8F%B7%E6%AD%A3%E5%88%99/" class="trm-anima-link">
-                    手机号正则表达式
-                </a>
-            </h5>
-            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
-            <ul class="trm-card-data trm-label">
-                <li>22/04/05</li>
-                <li>13:37</li>
+                <li>24/08/22</li>
+                <li>22:31</li>
                 
                 
             </ul>
@@ -530,12 +425,9 @@
 </div>
     
 </div>
-<!-- newest publications end -->
 
+    
 
-    <div class="trm-pagination">
-        <a class="page-number" href="/blog/">1</a><span class="page-number current">2</span>
-    </div>
 
 
                     <div class="trm-divider footer-divider"></div>
@@ -577,6 +469,10 @@
 
             <div class="trm-fixed-container" data-scroll data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target" data-scroll-offset="-10">
     
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
     
 </div>
           </div>
@@ -615,6 +511,10 @@
     
 
     <!-- 评论插件 -->
+    
+        
+
+        
     
 
 
