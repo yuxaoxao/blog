@@ -7,16 +7,21 @@
 <meta name="full-screen" content="yes">
 <meta name="theme-color" content="#317EFB" />
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
-<meta property="og:type" content="website">
-<meta property="og:title" content="技术有限的博客">
-<meta property="og:url" content="https://gitee.com/yuxiaoxiao.net/blog/archives/2024/08/index.html">
+<meta name="description" content="最近部署一个二开的vue前端项目，但是不知道为什么，部署上去后，引入的css&#x2F;js文件一直报404，翻找编译后的文件后，发现并没有对应的.css .js后缀名的文件，而是同名的.css.gz .js.gz，而html文件里引入的却是.css .js文件，一开始觉得是打包问题，后来就排除了，因为项目已经在生产稳定运行了，于是凭经验感觉是nginx配置的不对，于是搜索了一下这个问题，于是找到这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端nginx加载gz格式css-js文件">
+<meta property="og:url" content="https://gitee.com/yuxiaoxiao.net/blog/2025/05/10/%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AFnginx%E5%8A%A0%E8%BD%BDgz%E6%A0%BC%E5%BC%8Fcss-js%E6%96%87%E4%BB%B6/index.html">
 <meta property="og:site_name" content="技术有限的博客">
+<meta property="og:description" content="最近部署一个二开的vue前端项目，但是不知道为什么，部署上去后，引入的css&#x2F;js文件一直报404，翻找编译后的文件后，发现并没有对应的.css .js后缀名的文件，而是同名的.css.gz .js.gz，而html文件里引入的却是.css .js文件，一开始觉得是打包问题，后来就排除了，因为项目已经在生产稳定运行了，于是凭经验感觉是nginx配置的不对，于是搜索了一下这个问题，于是找到这">
 <meta property="og:locale">
+<meta property="article:published_time" content="2025-05-09T16:52:40.000Z">
+<meta property="article:modified_time" content="2025-05-09T18:19:35.805Z">
 <meta property="article:author" content="姑苏城外">
+<meta property="article:tag" content="前端">
 <meta name="twitter:card" content="summary">
 
 
-<title >技术有限的博客</title>
+<title >前端nginx加载gz格式css-js文件</title>
 
 <!-- Favicon -->
 
@@ -58,7 +63,7 @@
 
 <!-- Variable -->
 <script>window.ASYNC_CONFIG = {"hostname":"gitee.com","author":"姑苏城外","root":"/blog/","typed_text":["Web Developer"],"theme_version":"2.0.0","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/jsyx.jpg","icon16":"/img/favicon.ico","icon32":"/img/favicon.ico","appleTouchIcon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","showText":"(/≧▽≦/)咦！又好了！","hideText":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false}};</script>
-<script id="async-page-config">window.PAGE_CONFIG = {"isPost":false,"isHome":false,"postUpdate":"2025-05-10 02:20:27"};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2025-05-10 02:19:35"};</script>
 
 <!-- Theme mode css -->
 <link data-swup-theme rel="stylesheet" href="/blog/css/index.css?v=2.0.0" id="trm-switch-style">
@@ -185,7 +190,8 @@
             <!-- top bar end -->
 
             <!-- body -->
-            <div class="trm-content-start">
+            
+<div class="trm-content-start">
     <!-- banner -->
     <div class="trm-banner" data-scroll data-scroll-direction="vertical">
     
@@ -206,10 +212,10 @@
                     <!-- banner title -->
                     <div class="trm-banner-text ">
                         <div class="trm-label trm-mb-20">
-                            The article archive
+                            NEWS LETTER
                         </div>
                         <h1 class="trm-mb-30 trm-hsmb-font">
-                            云间连下榻，<br>天上接行杯。
+                            前端nginx加载gz格式css-js文件
                         </h1>
 
                         
@@ -219,7 +225,7 @@
                                 </li>
                                 <li>
                                     <span>
-                                        archives
+                                        2025
                                     </span
                                 ></li>
                             </ul>
@@ -317,73 +323,81 @@
                 <div class="trm-content" id="trm-content">
                     <div data-scroll data-scroll-repeat data-scroll-offset="500" id="about-triger"></div>
 
-                    <div class="row">
-    <div class="col-lg-12">
-        <div class="trm-card">
-            <div style="padding: 0 20px;">
-                
-                    <ul class="row trm-list" style="margin-bottom: 0px;"><li class="col-lg-4 trm-list-item" style="margin: 6px 0;"><a class="archive-list-link" href="/blog/archives/2025/">2025</a><span class="archive-list-count">（1）</span></li><li class="col-lg-4 trm-list-item" style="margin: 6px 0;"><a class="archive-list-link" href="/blog/archives/2024/">2024</a><span class="archive-list-count">（4）</span></li><li class="col-lg-4 trm-list-item" style="margin: 6px 0;"><a class="archive-list-link" href="/blog/archives/2023/">2023</a><span class="archive-list-count">（4）</span></li><li class="col-lg-4 trm-list-item" style="margin: 6px 0;"><a class="archive-list-link" href="/blog/archives/2022/">2022</a><span class="archive-list-count">（7）</span></li></ul>
-                
-            </div>
+                    <div id="post-info" class="row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            05/10
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            00:52
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            姑苏城外
         </div>
     </div>
 </div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <p>    最近部署一个二开的vue前端项目，但是不知道为什么，部署上去后，引入的css/js文件一直报404，翻找编译后的文件后，发现并没有对应的<code>.css</code> <code>.js</code>后缀名的文件，而是同名的<code>.css.gz</code> <code>.js.gz</code>，而html文件里引入的却是<code>.css</code> <code>.js</code>文件，一开始觉得是打包问题，后来就排除了，因为项目已经在生产稳定运行了，于是凭经验感觉是nginx配置的不对，于是搜索了一下这个问题，于是找到这篇文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/jiaohuizhuang6019/article/details/134717928">解决webpack打包生成gz格式css/js文件没法在nginx使用的问题–全网唯一正确_js.gz文件-CSDN博客</a></p>
+<p><strong>解决方式就是：nginx启用gzip_static</strong>，css/js参考以下nginx配置：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 第一种</span></span><br><span class="line"><span class="section">location</span> <span class="regexp">~ \.(js|mjs|json|css|html)$</span> &#123;</span><br><span class="line">  <span class="attribute">gzip_static</span> <span class="literal">on</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第二种</span></span><br><span class="line"><span class="section">location</span> /assets &#123;</span><br><span class="line">  <span class="attribute">gzip_static</span> <span class="literal">on</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ok，问题解决！</p>
 
-<!-- history -->
-
-<div class="row">
+</article>
+    
+    
+</div>
+<div id="post-next-prev" class="row">
     <div class="col-lg-12">
         <!-- title -->
         <h5 class="trm-title-with-divider">
-            
-                2024 年的归档
-            
-            <span data-number="01"></span>
+            其他文章
+            <span data-number="02"></span>
         </h5>
     </div>
-    <div class="col-lg-12">
-        <!-- timeline -->
-        <div class="trm-timeline">
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
+        <a href="/blog/2024/09/22/%E5%BC%80%E5%8F%91/%E7%94%9F%E6%88%90%E8%87%AA%E7%AD%BE%E8%AF%81%E4%B9%A6%E5%B9%B6%E9%83%A8%E7%BD%B2/" class="trm-cover-frame trm-anima-link">
             
-            <div class="trm-timeline-item trm-scroll-animation" data-scroll data-scroll-offset="40">
-                <div class="trm-timeline-mark-light"></div>
-                <div class="trm-timeline-mark"></div>
-                <div class="trm-a trm-timeline-content more">
-                    
-                        <div class="trm-card-header">
-                            <div class="trm-left-side">
-                                <h6>
-                                    <a href="/blog/2024/08/22/PHP/%E9%98%BF%E9%87%8C%E4%BA%91%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E9%99%90%E5%88%B6%E4%B8%8A%E4%BC%A0%E7%9B%AE%E5%BD%95%E6%89%A7%E8%A1%8Cphp%E6%96%87%E4%BB%B6/" class="trm-anima-link">
-                                        阿里云虚拟主机限制上传目录执行php文件
-                                    </a>
-                                </h6>
-                                <div class="trm-text-sm trm-accent-color trm-mt-15">
-                                    <ul class="trm-card-data trm-label ">
-                                        <li class="trm-accent-color">08/22</li>
-                                        <li class="trm-accent-color">22:31</li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    
-                </div>
+            
+                <img alt="cover" class="no-fancybox" src="/blog/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /blog/categories/%E5%BC%80%E5%8F%91/">
+                    开发
+                </a>
             </div>
-            
+            <h5>
+                <a href="/blog/2024/09/22/%E5%BC%80%E5%8F%91/%E7%94%9F%E6%88%90%E8%87%AA%E7%AD%BE%E8%AF%81%E4%B9%A6%E5%B9%B6%E9%83%A8%E7%BD%B2/" class="trm-anima-link">
+                    生成自签SSL证书并部署
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/09/22</li>
+                <li>23:58</li>
+                
+                
+            </ul>
         </div>
-        <!-- timeline end -->
     </div>
 </div>
+    
+</div>
 
-<!-- history end -->
-
-
-    <div class="trm-pagination">
-        <span class="page-number current">1</span>
-    </div>
-
-
+    
 
 
 
@@ -426,6 +440,10 @@
 
             <div class="trm-fixed-container" data-scroll data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target" data-scroll-offset="-10">
     
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
     
 </div>
           </div>
@@ -464,6 +482,10 @@
     
 
     <!-- 评论插件 -->
+    
+        
+
+        
     
 
 
