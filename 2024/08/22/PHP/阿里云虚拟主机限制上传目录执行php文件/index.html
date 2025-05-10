@@ -9,18 +9,18 @@
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
 <meta name="description" content=".htaccess配置如下： 123456789101112&lt;IfModule mod_rewrite.c&gt;  Options +FollowSymlinks -Multiviews  RewriteEngine On  RewriteCond % !^$  RewriteRule upload&#x2F;(.*).(php)$ – [F]  RewriteCond %&amp;#123;REQUEST">
 <meta property="og:type" content="article">
-<meta property="og:title" content="阿里云虚拟主机限制上传目录执行php文件">
+<meta property="og:title" content="阿里云Apache虚拟主机禁止指定目录执行PHP文件">
 <meta property="og:url" content="https://gitee.com/yuxiaoxiao.net/blog/2024/08/22/PHP/%E9%98%BF%E9%87%8C%E4%BA%91%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E9%99%90%E5%88%B6%E4%B8%8A%E4%BC%A0%E7%9B%AE%E5%BD%95%E6%89%A7%E8%A1%8Cphp%E6%96%87%E4%BB%B6/index.html">
 <meta property="og:site_name" content="技术有限的博客">
 <meta property="og:description" content=".htaccess配置如下： 123456789101112&lt;IfModule mod_rewrite.c&gt;  Options +FollowSymlinks -Multiviews  RewriteEngine On  RewriteCond % !^$  RewriteRule upload&#x2F;(.*).(php)$ – [F]  RewriteCond %&amp;#123;REQUEST">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-08-22T14:31:36.000Z">
-<meta property="article:modified_time" content="2024-08-22T14:32:55.939Z">
+<meta property="article:modified_time" content="2025-05-10T17:05:33.076Z">
 <meta property="article:author" content="姑苏城外">
 <meta name="twitter:card" content="summary">
 
 
-<title >阿里云虚拟主机限制上传目录执行php文件</title>
+<title >阿里云Apache虚拟主机禁止指定目录执行PHP文件</title>
 
 <!-- Favicon -->
 
@@ -62,7 +62,7 @@
 
 <!-- Variable -->
 <script>window.ASYNC_CONFIG = {"hostname":"gitee.com","author":"姑苏城外","root":"/blog/","typed_text":["Web Developer"],"theme_version":"2.0.0","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/jsyx.jpg","icon16":"/img/favicon.ico","icon32":"/img/favicon.ico","appleTouchIcon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","showText":"(/≧▽≦/)咦！又好了！","hideText":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false}};</script>
-<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2024-08-22 22:32:55"};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2025-05-11 01:05:33"};</script>
 
 <!-- Theme mode css -->
 <link data-swup-theme rel="stylesheet" href="/blog/css/index.css?v=2.0.0" id="trm-switch-style">
@@ -214,7 +214,7 @@
                             NEWS LETTER
                         </div>
                         <h1 class="trm-mb-30 trm-hsmb-font">
-                            阿里云虚拟主机限制上传目录执行php文件
+                            阿里云Apache虚拟主机禁止指定目录执行PHP文件
                         </h1>
 
                         
@@ -344,8 +344,12 @@
 </div>
 <div class="trm-card ">
     <article id="article-container" class="trm-publication">
-    <p>.htaccess配置如下：</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;IfModule mod_rewrite.c&gt;</span><br><span class="line">  Options +FollowSymlinks -Multiviews</span><br><span class="line">  RewriteEngine On</span><br><span class="line"></span><br><span class="line">  RewriteCond % !^$</span><br><span class="line">  RewriteRule upload/(.*).(php)$ – [F]</span><br><span class="line"></span><br><span class="line">  RewriteCond %&#123;REQUEST_FILENAME&#125; !-d</span><br><span class="line">  RewriteCond %&#123;REQUEST_FILENAME&#125; !-f</span><br><span class="line">  RewriteRule ^(.*)$ index.php?s=$1 [QSA,PT,L]</span><br><span class="line"></span><br><span class="line">&lt;/IfModule&gt;</span><br></pre></td></tr></table></figure>
+    <h5 id="htaccess配置如下：">.htaccess配置如下：</h5>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">&lt;IfModule mod_rewrite.c&gt;</span></span><br><span class="line">  <span class="attribute">Options</span> +FollowSymlinks -Multiviews</span><br><span class="line">  <span class="attribute">RewriteEngine</span> <span class="literal">On</span></span><br><span class="line"></span><br><span class="line">  <span class="attribute">RewriteCond</span> % !^$</span><br><span class="line">  <span class="attribute">RewriteRule</span> upload/(.*).(php)$ –<span class="meta"> [F]</span></span><br><span class="line"></span><br><span class="line">  <span class="attribute">RewriteCond</span> <span class="variable">%&#123;REQUEST_FILENAME&#125;</span> !-d</span><br><span class="line">  <span class="attribute">RewriteCond</span> <span class="variable">%&#123;REQUEST_FILENAME&#125;</span> !-f</span><br><span class="line">  <span class="attribute">RewriteRule</span> ^(.*)$ index.php?s=$<span class="number">1</span><span class="meta"> [QSA,PT,L]</span></span><br><span class="line"></span><br><span class="line"><span class="section">&lt;/IfModule&gt;</span></span><br></pre></td></tr></table></figure>
+<h5 id="2025-05-11更新，后来找到一个更简单的办法：">2025.05.11更新，后来找到一个更简单的办法：</h5>
+<p>在需要禁止的目录新建一个<code>.htaccess</code> 文件，添加以下配置：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">&lt;Files  ~  <span class="string">&quot;.php&quot;</span>&gt;</span></span><br><span class="line">	<span class="attribute">Order</span>  <span class="literal">allow</span>,<span class="literal">deny</span>  </span><br><span class="line">	<span class="attribute">Deny</span>  from  <span class="literal">all</span>  </span><br><span class="line"><span class="section">&lt;/Files&gt;</span>  </span><br></pre></td></tr></table></figure>
+<p>新建的 <code>.htaccess</code> 不影响其他目录的 <code>.htaccess</code>，只会在当前目录生效,并且该目录如果包含子目录，则子目录也会生效。</p>
 
 </article>
     
